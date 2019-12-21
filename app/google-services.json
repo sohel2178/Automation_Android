@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "296664351851",
+    "firebase_url": "https://automation-b0437.firebaseio.com",
+    "project_id": "automation-b0437",
+    "storage_bucket": "automation-b0437.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:296664351851:android:a7ae6f51641e5e2333dd2e",
+        "android_client_info": {
+          "package_name": "com.forbitbd.automation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "296664351851-2pms1d88ai99t4hsgthsdgttbspp0cdo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.forbitbd.automation",
+            "certificate_hash": "7d63d2fe2d286ad3834b4d47730d53d35fc6593a"
+          }
+        },
+        {
+          "client_id": "296664351851-97cjkfq09i34m5eh0r0nfi3d4oohvofp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXR2xu1OFLRkpSws_DZHxubVK4AIBpwkw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "296664351851-97cjkfq09i34m5eh0r0nfi3d4oohvofp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

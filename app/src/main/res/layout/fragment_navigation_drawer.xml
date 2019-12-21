@@ -1,0 +1,181 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+    <RelativeLayout
+        android:id="@+id/user_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/user_container_height"
+        android:background="@color/colorPrimary"
+        android:padding="@dimen/default_margin">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_centerHorizontal="true" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_profile"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:gravity="center_horizontal"
+                android:text="Name"
+                android:id="@+id/name"
+                style="@style/NameTextStyle" />
+
+            <TextView
+                android:text="email"
+                android:id="@+id/email"
+                android:gravity="center_horizontal"
+                style="@style/EmailTextStyle" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/medium_padding"
+        android:id="@+id/recycler_view">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+   <!-- <LinearLayout
+        android:id="@+id/menu_conatiner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_container"
+        android:orientation="vertical"
+        android:padding="@dimen/large_padding">
+
+        <LinearLayout
+            android:id="@+id/home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_back"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/small_padding">
+
+            <ImageView
+                android:layout_width="@dimen/nav_icon"
+                android:layout_height="@dimen/nav_icon"
+                android:layout_gravity="center_vertical"
+                android:padding="4dp"
+                android:src="@drawable/home"
+                android:tint="@color/colorPrimary" />
+
+            <TextView
+                style="@style/NavTextStyle"
+                android:layout_gravity="center_vertical"
+                android:text="Home" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/update_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_back"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/small_padding">
+
+            <ImageView
+                android:layout_width="@dimen/nav_icon"
+                android:layout_height="@dimen/nav_icon"
+                android:padding="4dp"
+                android:src="@drawable/ic_profile"
+                android:tint="@color/colorPrimary" />
+
+            <TextView
+                style="@style/NavTextStyle"
+                android:layout_gravity="center_vertical"
+                android:text="@string/profile" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/about_us"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_back"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/small_padding">
+
+            <ImageView
+                android:layout_width="@dimen/nav_icon"
+                android:layout_height="@dimen/nav_icon"
+                android:padding="4dp"
+                android:src="@drawable/aboutus"
+                android:tint="@color/colorPrimary" />
+
+            <TextView
+                style="@style/NavTextStyle"
+                android:layout_gravity="center_vertical"
+                android:text="@string/about_us" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/engineering_support"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_back"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/small_padding">
+
+            <ImageView
+                android:layout_width="@dimen/nav_icon"
+                android:layout_height="@dimen/nav_icon"
+                android:padding="4dp"
+                android:src="@drawable/tools"
+                android:tint="@color/colorPrimary" />
+
+            <TextView
+                style="@style/NavTextStyle"
+                android:layout_gravity="center_vertical"
+                android:text="@string/engineering_support" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_back"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/small_padding">
+
+            <ImageView
+                android:layout_width="@dimen/nav_icon"
+                android:layout_height="@dimen/nav_icon"
+                android:padding="4dp"
+                android:src="@drawable/logout"
+                android:tint="@color/colorPrimary" />
+
+            <TextView
+                style="@style/NavTextStyle"
+                android:layout_gravity="center_vertical"
+                android:text="Log Out" />
+        </LinearLayout>
+
+    </LinearLayout>-->
+
+
+</LinearLayout>
