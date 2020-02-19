@@ -101,20 +101,44 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void updateDevice(Device device) {
-        MyDatabaseRef.getInstance().getDeviceRef()
-                .child(device.getDevice_id())
-                .child("name")
-                .setValue(device.getName());
+        ApiClient client = ServiceGenerator.createService(ApiClient.class);
+        client.updateDevice(device.getDevice_id(),device)
+                .enqueue(new Callback<Device>() {
+                    @Override
+                    public void onResponse(Call<Device> call, Response<Device> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Device> call, Throwable t) {
+
+                    }
+                });
+//        MyDatabaseRef.getInstance().getDeviceRef()
+//                .child(device.getDevice_id())
+//                .child("name")
+//                .setValue(device.getName());
     }
 
     @Override
     public void updateSwitch(Switch aSwitch) {
+        int swId = Integer.parseInt(aSwitch.getId())-1;
         MyDatabaseRef.getInstance().getDeviceRef()
                 .child(aSwitch.getDevice_id())
                 .child("switches")
-                .child(aSwitch.getId())
+                .child(String.valueOf(swId))
                 .child("name")
                 .setValue(aSwitch.getName());
+    }
+
+    @Override
+    public void switchClick(Switch aSwitch) {
+        MyDatabaseRef.getInstance().getDeviceRef()
+                .child(aSwitch.getDevice_id())
+                .child("switches")
+                .child(String.valueOf(Integer.parseInt(aSwitch.getId())-1))
+                .child("state")
+                .setValue(aSwitch.getState());
     }
 
 

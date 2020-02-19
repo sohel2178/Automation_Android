@@ -20,6 +20,7 @@ public interface HomeContract {
         void updateDevice(Device device);
         void updateSwitch(Switch aSwitch);
         //void requestTodelete(Project project);
+        void switchClick(Switch aSwitch);
     }
 
     interface View{
@@ -28,7 +29,6 @@ public interface HomeContract {
         void updateDeviceToAdapter(Device device);
         void sendCommand(Command command);
         void editDeviceName(Device device);
-        void editSwitch(Switch aSwitch);
         void startSearchUserActivity(Device device);
         void startSharedUserActivity(Device device);
 

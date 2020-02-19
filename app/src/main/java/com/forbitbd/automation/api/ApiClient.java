@@ -50,6 +50,9 @@ public interface ApiClient {
     @POST("/api/devices/register")
     Call<Device> registerDevice(@Body RegisterReq registerReq);
 
+    @PUT("/api/devices/{device_id}")
+    Call<Device> updateDevice(@Path("device_id") String deviceID,@Body Device device);
+
 
     @POST("/api/commands")
     Call<Void> sendCommand(@Body Command command);

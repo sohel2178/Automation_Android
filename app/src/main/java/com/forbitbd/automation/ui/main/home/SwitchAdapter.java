@@ -24,11 +24,14 @@ public class SwitchAdapter extends RecyclerView.Adapter<SwitchAdapter.SwitchHold
     private LayoutInflater inflater;
     private String device_id;
 
-    public SwitchAdapter(Context context, List<Switch> switchList,String device_id) {
+    private SwitchListener listener;
+
+    public SwitchAdapter(Context context, List<Switch> switchList,String device_id,SwitchListener listener) {
         this.context = context;
         this.switchList = switchList;
         this.device_id = device_id;
         this.inflater = LayoutInflater.from(context);
+        this.listener = listener;
     }
 
     @NonNull
@@ -49,7 +52,7 @@ public class SwitchAdapter extends RecyclerView.Adapter<SwitchAdapter.SwitchHold
         return switchList.size();
     }
 
-    class SwitchHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class SwitchHolder extends RecyclerView.ViewHolder implements View.OnClickListener , View.OnLongClickListener {
 
         TextView swName;
         ImageView swImage;
@@ -62,6 +65,7 @@ public class SwitchAdapter extends RecyclerView.Adapter<SwitchAdapter.SwitchHold
             mCard = itemView.findViewById(R.id.image_card);
 
             mCard.setOnClickListener(this);
+            swName.setOnLongClickListener(this);
 
         }
 
@@ -75,12 +79,7 @@ public class SwitchAdapter extends RecyclerView.Adapter<SwitchAdapter.SwitchHold
                 sw.setState(0);
             }
 
-            MyDatabaseRef.getInstance().getDeviceRef()
-                    .child(device_id)
-                    .child("switches")
-                    .child(String.valueOf(getAdapterPosition()))
-                    .child("state")
-                    .setValue(sw.getState());
+            listener.onClickSwitch(sw);
 
 
         }
@@ -89,10 +88,18 @@ public class SwitchAdapter extends RecyclerView.Adapter<SwitchAdapter.SwitchHold
             swName.setText(aSwitch.getName());
 
             if(aSwitch.getState()==0){
-                swImage.setImageResource(R.drawable.light_off);
+                swImage.setImageResource(R.drawable.off);
             }else {
-                swImage.setImageResource(R.drawable.light_on);
+                swImage.setImageResource(R.drawable.on);
             }
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+
+            listener.editSwitch(switchList.get(getAdapterPosition()));
+
+            return false;
         }
     }
 }

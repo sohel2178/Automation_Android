@@ -13,14 +13,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.forbitbd.automation.R;
-import com.forbitbd.automation.models.Command;
 import com.forbitbd.automation.models.Device;
-import com.forbitbd.automation.models.SharedDevice;
 import com.forbitbd.automation.models.Switch;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.forbitbd.automation.ui.main.home.SwitchAdapter;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +33,7 @@ public class SharedDevicesAdapter extends RecyclerView.Adapter<SharedDevicesAdap
     private LayoutInflater inflater;
 
     private int hideContainerHeight;
+
 
     public SharedDevicesAdapter(SharedDevicesFragment sharedDevicesFragment) {
         this.sharedDevicesFragment = sharedDevicesFragment;
@@ -97,22 +98,42 @@ public class SharedDevicesAdapter extends RecyclerView.Adapter<SharedDevicesAdap
         }
     }
 
+    public void updateSwitch(Switch aSwitch){
+        Device device = getDevice(aSwitch);
+
+        if(device !=null){
+            device.getSwitches().set((Integer.parseInt(aSwitch.getId())-1),aSwitch);
+        }
+
+        notifyItemChanged(deviceList.indexOf(device));
+    }
+
+    private Device getDevice(Switch aSwitch){
+        for (Device x: deviceList){
+            if(x.getDevice_id().equals(aSwitch.getDevice_id())){
+                return x;
+            }
+        }
+
+        return null;
+    }
+
 
     class SharedDevicesHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView tvName,tvNameOne,tvNameTwo,tvNameThree,tvNameFour;
-        ImageView ivOne,ivTwo,ivThree,ivFour;
-
+        TextView tvName;
         LinearLayout mHideLayout;
         LinearLayout.LayoutParams params;
         ImageView ivArrow;
 
-        private FloatingActionButton ivShare,ivSharedUsers;
+        private MaterialButton ivShare,ivSharedUsers,btnPowerSave;
 
         private CardView mCardView;
         private boolean isExpand;
 
         private Context mContext;
+
+        private RecyclerView mRecyclerView;
 
         public SharedDevicesHolder(@NonNull View itemView) {
             super(itemView);
@@ -120,15 +141,9 @@ public class SharedDevicesAdapter extends RecyclerView.Adapter<SharedDevicesAdap
             mContext = itemView.getContext();
 
             tvName = itemView.findViewById(R.id.name);
-            /*tvNameOne = itemView.findViewById(R.id.name_one);
-            tvNameTwo = itemView.findViewById(R.id.name_two);
-            tvNameThree = itemView.findViewById(R.id.name_three);
-            tvNameFour = itemView.findViewById(R.id.name_four);
 
-            ivOne = itemView.findViewById(R.id.image_one);
-            ivTwo = itemView.findViewById(R.id.image_two);
-            ivThree = itemView.findViewById(R.id.image_three);
-            ivFour = itemView.findViewById(R.id.image_four);*/
+            mRecyclerView = itemView.findViewById(R.id.recycler_view);
+            mRecyclerView.setLayoutManager(new GridLayoutManager(mContext,2));
 
             ivArrow = itemView.findViewById(R.id.arrow);
             mHideLayout = itemView.findViewById(R.id.hide_container);
@@ -136,18 +151,16 @@ public class SharedDevicesAdapter extends RecyclerView.Adapter<SharedDevicesAdap
 
             ivShare = itemView.findViewById(R.id.share);
             ivSharedUsers = itemView.findViewById(R.id.shared_users);
+            btnPowerSave = itemView.findViewById(R.id.power_save);
 
-            ivShare.hide();
-            ivSharedUsers.hide();
+            ivShare.setVisibility(View.GONE);
+            ivSharedUsers.setVisibility(View.GONE);
+            btnPowerSave.setVisibility(View.GONE);
 
 
 
             params = (LinearLayout.LayoutParams) mHideLayout.getLayoutParams();
 
-            ivOne.setOnClickListener(this);
-            ivTwo.setOnClickListener(this);
-            ivThree.setOnClickListener(this);
-            ivFour.setOnClickListener(this);
             mCardView.setOnClickListener(this);
 
 
@@ -176,37 +189,9 @@ public class SharedDevicesAdapter extends RecyclerView.Adapter<SharedDevicesAdap
 
             tvName.setText(device.getName());
 
-            Switch sw1 = device.getSwitches().get(1);
-            tvNameOne.setText(sw1.getName());
-            if(sw1.getState()==0){
-                ivOne.setImageResource(R.drawable.light_off);
-            }else {
-                ivOne.setImageResource(R.drawable.light_on);
-            }
+            SwitchAdapter adapter = new SwitchAdapter(mContext,device.getSwitches(),device.getDevice_id(),sharedDevicesFragment);
+            mRecyclerView.setAdapter(adapter);
 
-            Switch sw2 = device.getSwitches().get(2);
-            tvNameTwo.setText(sw2.getName());
-            if(sw2.getState()==0){
-                ivTwo.setImageResource(R.drawable.light_off);
-            }else {
-                ivTwo.setImageResource(R.drawable.light_on);
-            }
-
-            Switch sw3 = device.getSwitches().get(3);
-            tvNameThree.setText(sw3.getName());
-            if(sw3.getState()==0){
-                ivThree.setImageResource(R.drawable.light_off);
-            }else {
-                ivThree.setImageResource(R.drawable.light_on);
-            }
-
-            Switch sw4 = device.getSwitches().get(4);
-            tvNameFour.setText(sw4.getName());
-            if(sw4.getState()==0){
-                ivFour.setImageResource(R.drawable.light_off);
-            }else {
-                ivFour.setImageResource(R.drawable.light_on);
-            }
 
         }
 
@@ -252,34 +237,34 @@ public class SharedDevicesAdapter extends RecyclerView.Adapter<SharedDevicesAdap
             } else{
                 Device device = deviceList.get(getAdapterPosition());
 
-                if(view ==ivOne){
-                    if(device.getSwitches().get(1).getState()==0){
-                        device.getSwitches().get(1).setState(1);
-                    }else {
-                        device.getSwitches().get(1).setState(0);
-                    }
-
-                }else if(view==ivTwo){
-                    if(device.getSwitches().get(2).getState()==0){
-                        device.getSwitches().get(2).setState(1);
-                    }else {
-                        device.getSwitches().get(2).setState(0);
-                    }
-                }else if(view==ivThree){
-                    if(device.getSwitches().get(3).getState()==0){
-                        device.getSwitches().get(3).setState(1);
-                    }else {
-                        device.getSwitches().get(3).setState(0);
-                    }
-                }else if(view==ivFour){
-                    if(device.getSwitches().get(4).getState()==0){
-                        device.getSwitches().get(4).setState(1);
-                    }else {
-                        device.getSwitches().get(4).setState(0);
-                    }
-                }
-
-                sharedDevicesFragment.updateSwitches(device);
+//                if(view ==ivOne){
+//                    if(device.getSwitches().get(1).getState()==0){
+//                        device.getSwitches().get(1).setState(1);
+//                    }else {
+//                        device.getSwitches().get(1).setState(0);
+//                    }
+//
+//                }else if(view==ivTwo){
+//                    if(device.getSwitches().get(2).getState()==0){
+//                        device.getSwitches().get(2).setState(1);
+//                    }else {
+//                        device.getSwitches().get(2).setState(0);
+//                    }
+//                }else if(view==ivThree){
+//                    if(device.getSwitches().get(3).getState()==0){
+//                        device.getSwitches().get(3).setState(1);
+//                    }else {
+//                        device.getSwitches().get(3).setState(0);
+//                    }
+//                }else if(view==ivFour){
+//                    if(device.getSwitches().get(4).getState()==0){
+//                        device.getSwitches().get(4).setState(1);
+//                    }else {
+//                        device.getSwitches().get(4).setState(0);
+//                    }
+//                }
+//
+//                sharedDevicesFragment.updateSwitches(device);
             }
         }
     }

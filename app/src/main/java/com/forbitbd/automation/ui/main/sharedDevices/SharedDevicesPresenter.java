@@ -1,8 +1,6 @@
 package com.forbitbd.automation.ui.main.sharedDevices;
 
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -11,6 +9,7 @@ import com.forbitbd.automation.api.ServiceGenerator;
 import com.forbitbd.automation.firebase.MyDatabaseRef;
 import com.forbitbd.automation.models.Device;
 import com.forbitbd.automation.models.SharedDevice;
+import com.forbitbd.automation.models.Switch;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,7 +56,12 @@ public class SharedDevicesPresenter implements SharedDevicesContract.Presenter {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Device device = dataSnapshot.getValue(Device.class);
-                        mView.addDeviceToAdapter(device);
+
+                        if(device!=null){
+                            mView.addDeviceToAdapter(device);
+                        }
+
+
                     }
 
                     @Override
@@ -77,6 +81,21 @@ public class SharedDevicesPresenter implements SharedDevicesContract.Presenter {
                     @Override
                     public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                         mView.updateDeviceInAdapter(device);
+                    }
+                });
+    }
+
+    @Override
+    public void switchClick(final Switch aSwitch) {
+        MyDatabaseRef.getInstance().getDeviceRef()
+                .child(aSwitch.getDevice_id())
+                .child("switches")
+                .child(String.valueOf(Integer.parseInt(aSwitch.getId())-1))
+                .child("state")
+                .setValue(aSwitch.getState(), new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                        mView.updateSwitch(aSwitch);
                     }
                 });
     }

@@ -33,7 +33,7 @@ import info.androidhive.fontawesome.FontDrawable;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment implements  HomeContract.View, EditListener {
+public class HomeFragment extends Fragment implements  HomeContract.View, EditListener,SwitchListener {
 
     private MainActivity mainActivity;
     private HomePresenter mPresenter;
@@ -149,6 +149,11 @@ public class HomeFragment extends Fragment implements  HomeContract.View, EditLi
         editDialog.setListener(this);
         editDialog.setArguments(bundle);
         editDialog.show(getChildFragmentManager(),"SHOW");
+    }
+
+    @Override
+    public void onClickSwitch(Switch aSwitch) {
+        mPresenter.switchClick(aSwitch);
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.forbitbd.automation.ui.main.sharedDevices;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.forbitbd.automation.R;
-import com.forbitbd.automation.models.Command;
 import com.forbitbd.automation.models.Device;
 import com.forbitbd.automation.models.SharedDevice;
+import com.forbitbd.automation.models.Switch;
 import com.forbitbd.automation.ui.main.MainActivity;
+import com.forbitbd.automation.ui.main.home.SwitchListener;
 
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SharedDevicesFragment extends Fragment implements SharedDevicesContract.View {
+public class SharedDevicesFragment extends Fragment implements SharedDevicesContract.View , SwitchListener {
 
     private SharedDevicesPresenter mPresenter;
     private SharedDevicesAdapter adapter;
@@ -86,7 +86,22 @@ public class SharedDevicesFragment extends Fragment implements SharedDevicesCont
     }
 
     @Override
+    public void updateSwitch(Switch aSwitch) {
+        adapter.updateSwitch(aSwitch);
+    }
+
+    @Override
     public void updateDeviceInAdapter(Device device) {
         adapter.updateDevice(device);
+    }
+
+    @Override
+    public void editSwitch(Switch aSwitch) {
+
+    }
+
+    @Override
+    public void onClickSwitch(Switch aSwitch) {
+        mPresenter.switchClick(aSwitch);
     }
 }
